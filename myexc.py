@@ -10,8 +10,6 @@ DESCRIPTION: Mysql Class
 Others: None
 **********************************************************************************************          
 '''
- 
-import configparser
 import pymysql
 import json
 import myglobal as mygl
@@ -60,4 +58,3 @@ class myExc:
             json_data.append(item)
 
         return json_data
-

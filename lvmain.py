@@ -73,9 +73,9 @@ def getMyChannel():
 #频道的主线程
 def channel_thread(channel_id, channel_type):
 
+    mylog.logger.info("the "+str(channel_id)+" thread is starting ......")
     chex = chexecutor.chExecutor(channel_id, channel_type)
     chex.channel_Thread_Running()
-    mylog.logger.info("the "+str(channel_id)+" thread is starting ......")
 
 if __name__ == '__main__':
     while True:

@@ -1,27 +1,26 @@
--- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
---
--- Host: localhost    Database: loopvideo
--- ------------------------------------------------------
--- Server version	5.7.28-0ubuntu0.18.04.4
+/*
+ Navicat Premium Data Transfer
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+ Source Server         : 127.0.0.1
+ Source Server Type    : MySQL
+ Source Server Version : 50728
+ Source Host           : localhost:3306
+ Source Schema         : loopvideo
 
---
--- Table structure for table `channel`
---
+ Target Server Type    : MySQL
+ Target Server Version : 50728
+ File Encoding         : 65001
 
+ Date: 27/09/2020 13:05:33
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for channel
+-- ----------------------------
 DROP TABLE IF EXISTS `channel`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `channel` (
   `channel_id` int(32) NOT NULL COMMENT '频道的ID，每建一个频道都需要生成一个32位的频道号；\n外部通过访问此频道来访问相关的内容；\n其为全局的主键；',
   `channel_type` varchar(5) CHARACTER SET utf8 DEFAULT NULL COMMENT '频道的类型\nLoop 可以设置轮播的内容，可以定时插入直播和点播的内容；\nLive 主要设置直播的内容，可以定时插入直播或者点播的内容；\n',
@@ -31,15 +30,21 @@ CREATE TABLE `channel` (
   `status` varchar(10) CHARACTER SET utf8 NOT NULL COMMENT '频道的状态：10个字符；缺省状态：normal\n1、normal\n2、stop\n3、delete',
   PRIMARY KEY (`channel_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `program`
---
+-- ----------------------------
+-- Records of channel
+-- ----------------------------
+BEGIN;
+INSERT INTO `channel` VALUES (1, 'live', 'CCTV-1', '2020-09-10 08:30:09', 1, 'normal');
+INSERT INTO `channel` VALUES (2, 'live', 'CCTV-3', '2020-09-10 08:31:35', 1, 'normal');
+INSERT INTO `channel` VALUES (3, 'live', 'CCTV-6', '2020-09-10 08:32:00', 2, 'delete');
+INSERT INTO `channel` VALUES (4, 'loop', 'CCTV--2', '2020-09-10 08:32:17', 2, 'delete');
+COMMIT;
 
+-- ----------------------------
+-- Table structure for program
+-- ----------------------------
 DROP TABLE IF EXISTS `program`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `program` (
   `channel_id` int(32) NOT NULL COMMENT '频道的ID，频道ID+视频ID+日期 组成主键；',
   `lv_date` int(8) NOT NULL COMMENT '播放日期：yyyymmdd',
@@ -57,15 +62,24 @@ CREATE TABLE `program` (
   PRIMARY KEY (`media_id`) USING BTREE,
   KEY `program_index` (`channel_id`,`lv_date`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `user`
---
+-- ----------------------------
+-- Records of program
+-- ----------------------------
+BEGIN;
+INSERT INTO `program` VALUES (1, 20200925, 1, 'stream', 0, '央视1套', 'rtmp://hwzbout.yunshicloud.com/7p01o6/77q353', '2020-09-10 10:09:23', 0, 0, 0, 1, 'normal');
+INSERT INTO `program` VALUES (1, 20200925, 2, 'stream', 0, '云南的风土人情', 'rtmp://192.168.0.244/sample/1', '2020-09-10 10:13:54', 112600, 112700, 0, 0, 'normal');
+INSERT INTO `program` VALUES (2, 20200925, 3, 'stream', 0, '央视三套', 'rtmp://hwzbout.yunshicloud.com/0up56g/5272xb', '2020-09-10 10:36:32', 0, 0, 0, 1, 'normal');
+INSERT INTO `program` VALUES (2, 20200925, 4, 'stream', 0, 'yunnan', 'rtmp://192.168.0.244/sample/1', '2020-09-10 10:37:56', 141000, 141200, 0, 0, 'normal');
+INSERT INTO `program` VALUES (3, 20200925, 5, 'stream', 0, '央视6套', 'rtmp://hwzbout.yunshicloud.com/7p01o6/77q353', '2020-09-19 10:25:50', 0, 0, 0, 1, 'normal');
+INSERT INTO `program` VALUES (3, 20200925, 6, 'stream', 0, 'yunnan', 'rtmp://192.168.0.244/sample/1', '2020-09-19 10:25:50', 104000, 104200, 0, 0, 'normal');
+INSERT INTO `program` VALUES (1, 20200925, 8, 'stream', 0, '云南2', 'rtmp://192.168.0.244/sample/1', '2020-09-19 10:25:50', 103200, 103300, 0, 0, 'normal');
+COMMIT;
 
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
 DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `user_id` int(32) NOT NULL COMMENT '用户编号，该用户编号为32位的长度，不能够重复;',
   `user_name` varchar(40) CHARACTER SET utf8 NOT NULL COMMENT '用户的姓名；\n最长为40个字符；',
@@ -73,15 +87,13 @@ CREATE TABLE `user` (
   `status` varchar(10) CHARACTER SET utf8 NOT NULL COMMENT '用户的状态：10个字符；缺省状态：normal\n1、normal\n2、stop\n3、delete',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+BEGIN;
+INSERT INTO `user` VALUES (1, '肖波', '2020-09-10 08:27:27', 'normal');
+INSERT INTO `user` VALUES (2, '用户1', '2020-09-10 08:28:41', 'normal');
+COMMIT;
 
--- Dump completed on 2020-09-25 15:13:01
+SET FOREIGN_KEY_CHECKS = 1;

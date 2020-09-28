@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 27/09/2020 13:05:33
+ Date: 28/09/2020 08:59:12
 */
 
 SET NAMES utf8mb4;
@@ -54,8 +54,8 @@ CREATE TABLE `program` (
   `media_name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '媒体文件的名称',
   `media_url` varchar(255) CHARACTER SET latin1 NOT NULL COMMENT '轮播内容的地址，因为通过m3u8来实现，所以保存的是m3u8的地址；',
   `last_time` datetime NOT NULL COMMENT '最后修改时间，每次修改记录都需把该字段更新为当前时间',
-  `start_time` int(11) NOT NULL COMMENT '开始时间，时间精度只能是秒；hhmmss长度是6位；如果是lv-type:loop\n则该项不起作用；',
-  `end_time` int(11) NOT NULL COMMENT '开始时间，时间精度只能是秒；hhmmss长度是6位；如果是lv-type:loop\n则该项不起作用；',
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
   `delay` int(10) NOT NULL DEFAULT '0' COMMENT '延时时间调整；秒',
   `isloop` int(11) NOT NULL DEFAULT '1' COMMENT '循环标志\n1：循环，所设置的start-time和end-time都不起作用；\n其它为非循环播放，按start-time和end-time进行播放；',
   `status` varchar(10) CHARACTER SET latin1 NOT NULL COMMENT '记录的状态：10个字符；缺省状态：normal\n1、normal\n2、stop\n3、delete',
@@ -67,13 +67,13 @@ CREATE TABLE `program` (
 -- Records of program
 -- ----------------------------
 BEGIN;
-INSERT INTO `program` VALUES (1, 20200925, 1, 'stream', 0, '央视1套', 'rtmp://hwzbout.yunshicloud.com/7p01o6/77q353', '2020-09-10 10:09:23', 0, 0, 0, 1, 'normal');
-INSERT INTO `program` VALUES (1, 20200925, 2, 'stream', 0, '云南的风土人情', 'rtmp://192.168.0.244/sample/1', '2020-09-10 10:13:54', 112600, 112700, 0, 0, 'normal');
-INSERT INTO `program` VALUES (2, 20200925, 3, 'stream', 0, '央视三套', 'rtmp://hwzbout.yunshicloud.com/0up56g/5272xb', '2020-09-10 10:36:32', 0, 0, 0, 1, 'normal');
-INSERT INTO `program` VALUES (2, 20200925, 4, 'stream', 0, 'yunnan', 'rtmp://192.168.0.244/sample/1', '2020-09-10 10:37:56', 141000, 141200, 0, 0, 'normal');
-INSERT INTO `program` VALUES (3, 20200925, 5, 'stream', 0, '央视6套', 'rtmp://hwzbout.yunshicloud.com/7p01o6/77q353', '2020-09-19 10:25:50', 0, 0, 0, 1, 'normal');
-INSERT INTO `program` VALUES (3, 20200925, 6, 'stream', 0, 'yunnan', 'rtmp://192.168.0.244/sample/1', '2020-09-19 10:25:50', 104000, 104200, 0, 0, 'normal');
-INSERT INTO `program` VALUES (1, 20200925, 8, 'stream', 0, '云南2', 'rtmp://192.168.0.244/sample/1', '2020-09-19 10:25:50', 103200, 103300, 0, 0, 'normal');
+INSERT INTO `program` VALUES (1, 20200925, 1, 'stream', 0, '央视1套', 'rtmp://hwzbout.yunshicloud.com/7p01o6/77q353', '2020-09-10 10:09:23', '2020-09-28 10:55:37', '2020-09-29 10:39:42', 30, 1, 'normal');
+INSERT INTO `program` VALUES (1, 20200925, 2, 'stream', 0, '云南的风土人情', 'rtmp://192.168.0.244/sample/1', '2020-09-10 10:13:54', '2020-09-28 11:39:47', '2020-09-29 11:39:52', 2, 0, 'normal');
+INSERT INTO `program` VALUES (2, 20200925, 3, 'stream', 0, '央视三套', 'rtmp://hwzbout.yunshicloud.com/0up56g/5272xb', '2020-09-10 10:36:32', '2020-09-28 08:39:56', '2020-09-29 08:40:01', 3, 1, 'normal');
+INSERT INTO `program` VALUES (2, 20200925, 4, 'stream', 0, 'yunnan', 'rtmp://192.168.0.244/sample/1', '2020-09-10 10:37:56', '2020-09-28 08:40:06', '2020-09-29 08:40:10', 4, 0, 'normal');
+INSERT INTO `program` VALUES (3, 20200925, 5, 'stream', 0, '央视6套', 'rtmp://hwzbout.yunshicloud.com/7p01o6/77q353', '2020-09-19 10:25:50', '2020-09-28 08:40:14', '2020-09-29 08:40:19', 5, 1, 'normal');
+INSERT INTO `program` VALUES (3, 20200925, 6, 'stream', 0, 'yunnan', 'rtmp://192.168.0.244/sample/1', '2020-09-19 10:25:50', '2020-09-28 08:40:23', '2020-09-29 08:40:27', 6, 0, 'normal');
+INSERT INTO `program` VALUES (1, 20200925, 8, 'stream', 0, '云南2', 'rtmp://192.168.0.244/sample/1', '2020-09-19 10:25:50', '2020-09-28 08:40:31', '2020-09-29 08:40:36', 7, 0, 'normal');
 COMMIT;
 
 -- ----------------------------

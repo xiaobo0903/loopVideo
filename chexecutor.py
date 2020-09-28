@@ -72,8 +72,9 @@ class chExecutor:
         self.idate = idate
         itime = itime
         curtime = curtime
-        sql = sql = "select media_type, media_url from program where channel_id = "+str(self.channel_id)+" and status = 'normal' and isloop = 0 and lv_date = "+str(self.idate)+" and start_time <=  "+str(itime)+" and end_time>= "+str(itime)+" limit 1"
-        
+        #sql = sql = "select media_type, media_url from program where channel_id = "+str(self.channel_id)+" and status = 'normal' and isloop = 0 and lv_date = "+str(self.idate)+" and start_time <=  "+str(itime)+" and end_time>= "+str(itime)+" limit 1"
+        sql = sql = "select media_type, media_url from program where channel_id = "+str(self.channel_id)+" and status = 'normal' and isloop = 0 and start_time <=  DATE_ADD(now(), interval delay second) and end_time>= DATE_ADD(now(), interval delay second) limit 1"
+       
         result  = self.mydb.queryToJson(sql)
         if len(result) == 0:
             self.getBackProgramUrl()
@@ -89,7 +90,9 @@ class chExecutor:
     #取当前频道的背景直播文件;
     def getBackProgramUrl(self):
 
-        sql = "select media_type, media_url from program where channel_id = "+str(self.channel_id)+" and status = 'normal' and isloop = 1 and lv_date = "+str(self.idate)+" limit 1"
+        #sql = "select media_type, media_url from program where channel_id = "+str(self.channel_id)+" and status = 'normal' and isloop = 1 and lv_date = "+str(self.idate)+" limit 1"
+        sql = "select media_type, media_url from program where channel_id = "+str(self.channel_id)+" and status = 'normal' and isloop = 1 and start_time <=  DATE_ADD(now(), interval delay second) and end_time>= DATE_ADD(now(), interval delay second) limit 1"
+
         result  = self.mydb.queryToJson(sql)
         if len(result) == 0:
             return

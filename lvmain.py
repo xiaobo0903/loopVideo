@@ -15,15 +15,21 @@ import time  # 引入time模块
 import myexc
 import myglobal as mygl
 import json
-import time
 import log as mylog
 import threading
+import nacos
+import pnacos
 
 mygl._myinit("./setting.conf") #需要先于myexc进行初始化；
 mygl._init()    #初始化内存变量
+nacos_ip = mygl.get_my("nacos_ip")
 
 import chexecutor
 
+#启动nacos的服务注册，注册的名称是:loopvideo
+pn = pnacos.pnacos(nacos_ip)
+pn.run()
+#*************************************
 
 #from table(channel),get channel info;
 def getMyChannel():

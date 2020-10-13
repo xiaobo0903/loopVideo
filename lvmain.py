@@ -6,7 +6,7 @@ File NAME:  wloopvideo.py
 Author:  xiaobo      
 Version: v1.0   
 Date:  2020-09-16 
-DESCRIPTION: loopvideo Web Server                          
+DESCRIPTION: loopvideo Server                          
 服务的主类：每五秒轮询一次频道表，对于频道表的内容进行更新处理，如果频道表存在，则放入到系统的全局变量channl_list中；
 每个线程会读取该全局数据，如果没有查询到自已线程的channel_list，则删除本线程建立的ffmpeg进程， 线程通出；
 **********************************************************************************************          
@@ -27,9 +27,13 @@ nacos_ip = mygl.get_my("nacos_ip")
 import chexecutor
 
 #启动nacos的服务注册，注册的名称是:loopvideo
-pn = pnacos.pnacos(nacos_ip)
-pn.run()
+NAMESPACE = "myspace"
+SERVICENAME = "loopvideo-server"
+pn = pnacos.pnacos(nacos_ip, NAMESPACE, SERVICENAME)
+#nacos服务名和命名空间在pname中进行设置
+pn.start()
 #*************************************
+#如果没有设置nacos上一段的代码可以屏蔽
 
 #from table(channel),get channel info;
 def getMyChannel():

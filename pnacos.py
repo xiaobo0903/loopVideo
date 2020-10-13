@@ -19,15 +19,18 @@ import threading
 class pnacos:
 
     SERVER_ADDRESSES = "10.10.10.100"
-    NAMESPACE = "myspace"
-    SERVICENAME = "loopvideo"
-    port = 80
+    NAMESPACE = ""
+    SERVICENAME = ""
+    port = 0
     client = None
     ip = None
 
-    def __init__(self, nacos_ip):
+    def __init__(self, nacos_ip, namespace, servicename):
 
         self.SERVER_ADDRESSES = nacos_ip
+        self.SERVICENAME = servicename
+        self.NAMESPACE = namespace
+        
         try:
             s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
             s.connect(('114.114.114.114',80))
@@ -54,7 +57,7 @@ class pnacos:
             #mylog.logger.info(i_beat) 
             time.sleep(5)
     #启动nacos的注册运行
-    def run(self):
+    def start(self):
         self.RegInstance()
         time.sleep(5)
         self.QueryInstance()
@@ -65,7 +68,7 @@ class pnacos:
 if __name__ == '__main__':
 
     pn = pnacos()
-    pn.run()
+    pn.start()
     while True:
         time.sleep(10)
 

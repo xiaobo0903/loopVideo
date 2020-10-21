@@ -32,6 +32,7 @@ def _myinit(conf):#mysql配置文件初始化
     _global_my["db_port"] = cf.getint("mysqldb", "db_port")
     _global_my["db_user"] = cf.get("mysqldb", "db_user")
     _global_my["db_pass"] = cf.get("mysqldb", "db_pass") 
+    _global_my["db_pool"] = cf.get("mysqldb", "db_pool")     
     _global_my["db_database"] = cf.get("mysqldb", "db_database")
     _global_my["nacos_ip"] = cf.get("nacos", "ip") 
 
